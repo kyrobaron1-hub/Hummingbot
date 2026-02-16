@@ -100,16 +100,21 @@ async def main() -> None:
         )
         messages.append(msg_derivative_market)
 
-    msg_batch_update = composer.MsgGrantTyped(
+    if len(derivative_market_ids) > 0:
+            # Grant generic authorization for the v2 BatchUpdateOrders message (required by injective_v2_perpetual connector)
+    msg_batch_v2 = composer.MsgGrant(
         granter=granter_address.to_acc_bech32(),
         grantee=args.grantee_address,
-        msg_type="/injective.exchange.v2.MsgBatchUpdateOrders",
-        expire_in=args.grant_expiration_days * SECONDS_PER_DAY,
-        subaccount_id=granter_subaccount_id,
-        spot_markets=spot_market_ids,
-        derivative_markets=derivative_market_ids,
+        grant=composer.Grant(
+            authorization=composer.GenericAuthorization(
+                msg="/injective.exchange.v2.MsgBatchUpdateOrders"
+            ),
+            expiration=composer.timestamp_from_now(
+                args.grant_expiration_days * SECONDS_PER_DAY
+            ),
+        )
     )
-    messages.append(msg_batch_update)
+    messages.append(msg_batch_v2)
 
     tx = (Transaction().with_messages(*messages).with_sequence(
         client.get_sequence()).with_account_num(
