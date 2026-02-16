@@ -93,7 +93,7 @@ async def main() -> None:
         msg_derivative_market = composer.MsgGrantTyped(
             granter=granter_address.to_acc_bech32(),
             grantee=args.grantee_address,
-            msg_type="BatchCreateDerivativeLimitOrdersAuthz",
+            msg_type="CancelDerivativeOrderAuthz",
             expire_in=args.grant_expiration_days * SECONDS_PER_DAY,
             subaccount_id=granter_subaccount_id,
             market_ids=derivative_market_ids,
