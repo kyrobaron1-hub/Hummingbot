@@ -100,7 +100,7 @@ async def main() -> None:
         )
         messages.append(msg_derivative_market)
 
-            # Grant generic authorization for the v2 BatchUpdateOrders message (required by injective_v2_perpetual connector)
+    # Grant generic authorization for the v2 BatchUpdateOrders message (required by injective_v2_perpetual connector)
     msg_batch_v2 = composer.MsgGrant(
         granter=granter_address.to_acc_bech32(),
         grantee=args.grantee_address,
