@@ -103,7 +103,7 @@ async def main() -> None:
     msg_batch_update = composer.MsgGrantTyped(
         granter=granter_address.to_acc_bech32(),
         grantee=args.grantee_address,
-        msg_type="BatchCreateDerivativeLimitOrdersAuthz",
+        msg_type="BatchUpdateOrdersAuthz",
         expire_in=args.grant_expiration_days * SECONDS_PER_DAY,
         subaccount_id=granter_subaccount_id,
         spot_markets=spot_market_ids,
